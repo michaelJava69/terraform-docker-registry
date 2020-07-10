@@ -3,6 +3,24 @@ provider "aws" {
   profile = "${var.profile}"
 }
 
+
+terraform {
+  backend "s3" {
+
+    # This backend configuration is filled in automatically at test time by Terratest. If you wish to run this example
+    # manually, uncomment and fill in the config below.
+
+     bucket         = "terraform-s3-docker-registry"
+     key            = "terraform/terraform.tfstate"
+     region         = "us-east-2"
+     dynamodb_table = "terraform-s3-docker-registry-locks"
+     encrypt        = true
+
+  }
+}
+
+
+
 # We could create an extra VPC, properly set a subnet and
 # have the whole thing configured (internet gateway, an updated
 # routing table etc).
